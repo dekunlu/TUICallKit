@@ -35,19 +35,20 @@ class TUICallKitNavigatorObserver extends NavigatorObserver {
     if (!isClose) {
       return;
     }
-    currentPage = CallPage.callingPage;
-    TUICallKitNavigatorObserver.getInstance()
-        .navigator
-        ?.push(MaterialPageRoute(builder: (widget) {
-      return TUICallKitWidget(close: () {
-        if (!isClose) {
-          isClose = true;
-          TUICallKitPlatform.instance.stopForegroundService();
-          CallingBellFeature.stopRing();
-          TUICallKitNavigatorObserver.getInstance().exitCallingPage();
-        }
-      });
-    }));
+    // currentPage = CallPage.callingPage;
+    // TUICallKitNavigatorObserver.getInstance()
+    //     .navigator
+    //     ?.push(MaterialPageRoute(builder: (widget) {
+    //   return TUICallKitWidget(close: () {
+    //     if (!isClose) {
+    //       isClose = true;
+    //       TUICallKitPlatform.instance.stopForegroundService();
+    //       CallingBellFeature.stopRing();
+    //       TUICallKitNavigatorObserver.getInstance().exitCallingPage();
+    //     }
+    //   });
+    // }));
+    // 使用我们的ui
     _currentUuid = _uuid.v4();
     var showName = '';
     var avatar = '';
