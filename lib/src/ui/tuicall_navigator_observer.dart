@@ -35,6 +35,7 @@ class TUICallKitNavigatorObserver extends NavigatorObserver {
     if (!isClose) {
       return;
     }
+    print('开始通话,使用我们的ui');
     // currentPage = CallPage.callingPage;
     // TUICallKitNavigatorObserver.getInstance()
     //     .navigator
