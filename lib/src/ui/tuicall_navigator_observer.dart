@@ -19,7 +19,7 @@ class TUICallKitNavigatorObserver extends NavigatorObserver {
       TUICallKitNavigatorObserver();
   static bool isClose = true;
   static CallPage currentPage = CallPage.none;
-  late String _currentUuid;
+  String _currentUuid='';
   final Uuid _uuid = const Uuid();
 
   static TUICallKitNavigatorObserver getInstance() {
@@ -35,21 +35,21 @@ class TUICallKitNavigatorObserver extends NavigatorObserver {
     if (!isClose) {
       return;
     }
-    print('开始通话,使用我们的ui');
-    // currentPage = CallPage.callingPage;
-    // TUICallKitNavigatorObserver.getInstance()
-    //     .navigator
-    //     ?.push(MaterialPageRoute(builder: (widget) {
-    //   return TUICallKitWidget(close: () {
-    //     if (!isClose) {
-    //       isClose = true;
-    //       TUICallKitPlatform.instance.stopForegroundService();
-    //       CallingBellFeature.stopRing();
-    //       TUICallKitNavigatorObserver.getInstance().exitCallingPage();
-    //     }
-    //   });
-    // }));
-    // 使用我们的ui
+    currentPage = CallPage.callingPage;
+    TUICallKitNavigatorObserver.getInstance()
+        .navigator
+        ?.push(MaterialPageRoute(builder: (widget) {
+      return TUICallKitWidget(close: () {
+        if (!isClose) {
+          isClose = true;
+          TUICallKitPlatform.instance.stopForegroundService();
+          CallingBellFeature.stopRing();
+          TUICallKitNavigatorObserver.getInstance().exitCallingPage();
+        }
+      });
+    }));
+    
+    // 使用我们的ui,如果在后台
     _currentUuid = _uuid.v4();
     var showName = '';
     var avatar = '';
@@ -65,8 +65,7 @@ class TUICallKitNavigatorObserver extends NavigatorObserver {
         avatar: avatar,
         extra: <String, dynamic>{'userId': ''},
         ios: const IOSParams(handleType: 'generic'));
-    // await FlutterCallkitIncoming.startCall(params);
-    await FlutterCallkitIncoming.showCallkitIncoming(params);
+    await FlutterCallkitIncoming.startCall(params);
     isClose = false;
   }
 
@@ -78,6 +77,8 @@ class TUICallKitNavigatorObserver extends NavigatorObserver {
       TUICallKitNavigatorObserver.getInstance().navigator?.pop();
     }
     currentPage = CallPage.none;
+    await FlutterCallkitIncoming.endCall(_currentUuid);
+    _currentUuid='';
   }
 
   void enterInviteUserPage() {
