@@ -66,6 +66,7 @@ class TUICallKitNavigatorObserver extends NavigatorObserver {
         extra: <String, dynamic>{'userId': ''},
         ios: const IOSParams(handleType: 'generic'));
     await FlutterCallkitIncoming.startCall(params);
+    await FlutterCallkitIncoming.showCallkitIncoming(params);
     isClose = false;
   }
 
