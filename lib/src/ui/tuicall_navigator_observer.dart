@@ -61,7 +61,7 @@ class TUICallKitNavigatorObserver extends NavigatorObserver {
     CallKitParams params = CallKitParams(
         id: _currentUuid,
         nameCaller: showName,
-        type: 2,
+        type: 0,
         avatar: avatar,
         extra: <String, dynamic>{'userId': ''},
         ios: const IOSParams(handleType: 'generic'));
